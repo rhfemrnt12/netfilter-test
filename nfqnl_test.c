@@ -95,7 +95,10 @@ static int cb(struct nfq_q_handle *qh, struct nfgenmsg *nfmsg,
 {
 	u_int32_t id = print_pkt(nfa);
 	printf("entering callback\n");
-	if(flag) return nfq_set_verdict(qh, id, NF_DROP, 0, NULL); //test.gilgil.net에 들어갈 때는 NF_DROP 사용
+	if(flag) {
+		flag = 0;
+		return nfq_set_verdict(qh, id, NF_DROP, 0, NULL); //test.gilgil.net에 들어갈 때는 NF_DROP 사용
+	}
 	else return nfq_set_verdict(qh, id, NF_ACCEPT, 0, NULL);
 }
 
